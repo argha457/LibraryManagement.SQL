@@ -1,0 +1,176 @@
+#DROP DATABASE Library;
+
+CREATE DATABASE Library;
+USE Library;
+
+
+CREATE TABLE Books(ISBN NUMERIC(13) PRIMARY KEY, Title VARCHAR(80), Author VARCHAR(80), Price NUMERIC(10,2), NoOfCopies INT,BranchId INT);
+CREATE TABLE Customer(CustomerId INT PRIMARY KEY, Name VARCHAR(80), Address VARCHAR(80), BookId NUMERIC(13), BranchId INT);
+CREATE TABLE Branch(BranchId INT PRIMARY KEY, BranchName VARCHAR(50), ManagerName VARCHAR(30));
+CREATE TABLE IssueStatus(IssueId INT PRIMARY KEY, ISBN NUMERIC(13), IssueDate Date, CustomerId INT);
+CREATE TABLE ReturnStatus(ReturnId INT PRIMARY KEY,  ISBN NUMERIC(13), ReturnDate DATE, CustomerId INT);
+CREATE TABLE Fine(FineId INT PRIMARY KEY auto_increment,FineSts VARCHAR(50),CustomerId INT);
+
+
+
+ALTER TABLE Books ADD FOREIGN KEY (BranchId) REFERENCES Branch(BranchId);
+ALTER TABLE Customer ADD FOREIGN KEY(BookId) REFERENCES Books(ISBN);
+ALTER TABLE Customer ADD FOREIGN KEY(BranchId) REFERENCES Branch(BranchId);
+ALTER TABLE IssueStatus ADD FOREIGN KEY(ISBN) REFERENCES Books(ISBN);
+ALTER TABLE IssueStatus ADD FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId);
+ALTER TABLE ReturnStatus ADD FOREIGN KEY(ISBN) REFERENCES IssueStatus(ISBN);
+ALTER TABLE ReturnStatus ADD FOREIGN KEY(CustomerId) REFERENCES IssueStatus(CustomerId);
+ALTER TABLE Fine ADD FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId);
+
+
+INSERT INTO Branch VALUES(501, 'Sector V', 'Ramesh Kumar');
+INSERT INTO Branch VALUES(502, 'Newtown', 'Sushmita Roy');
+INSERT INTO Branch VALUES(503, 'Bidhannagar', 'Vikram Singh');
+INSERT INTO Branch VALUES(504, 'Karunamyee', 'Lakshmi Iyer');
+INSERT INTO Branch VALUES(505, 'City Center', 'Rajesh Gupta');
+INSERT INTO Branch VALUES(506, 'Sastha Bhawan', 'Anjali Reddy');
+INSERT INTO Branch VALUES(507, 'Chinar Park', 'Prakash Menon');
+INSERT INTO Branch VALUES(508, 'Barasat', 'Meera Sharma');
+INSERT INTO Branch VALUES(509, 'Barrackpur', 'Amit Verma');
+INSERT INTO Branch VALUES(510, 'Saroj Park', 'Kavita Patel');
+
+
+INSERT INTO Books VALUES(9700000001000, 'Pride and Prejudice', 'Jane Austen', 1299, 150, 501);
+INSERT INTO Books VALUES(9700000001001, 'To Kill a Mockingbird', 'Harper Lee', 1550, 120, 502);
+INSERT INTO Books VALUES(9700000001002, 'Jane Eyre', 'Charlotte Bronte', 999, 200, 503);
+INSERT INTO Books VALUES(9700000001003, '1984', 'George Orwell', 1099, 180, 504);
+INSERT INTO Books VALUES(9700000001004, 'The Great Gatsby', 'F. Scott Fitzgerald', 1199, 160 ,505);
+INSERT INTO Books VALUES(9700000001005, 'One Hundred Years of Solitude', 'Gabriel Garcia Marquez', 1450, 220, 506);
+INSERT INTO Books VALUES(9700000001006, 'The Catcher in the Rye', 'J.D. Salinger', 950, 130, 507);
+INSERT INTO Books VALUES(9700000001007, 'Moby-Dick', 'Herman Melville', 1999, 250, 508);
+INSERT INTO Books VALUES(9700000001008, 'The Lord of the Rings', 'J.R.R. Tolkien', 2250, 300, 509);
+INSERT INTO Books VALUES(9700000001009, 'Brave New World', 'Aldous Huxley', 1799, 160, 510);
+INSERT INTO Books VALUES(9700000001010, 'The Odyssey', 'Homer', 1299, 140, 509);
+INSERT INTO Books VALUES(9700000001011, 'The Hobbit', 'J.R.R. Tolkien', 1499, 200, 508);
+INSERT INTO Books VALUES(9700000001012, 'Wuthering Heights', 'Emily Bronte', 1850, 180, 507);
+INSERT INTO Books VALUES(9700000001013, 'The Alchemist', 'Paulo Coelho', 1350, 170, 506);
+INSERT INTO Books VALUES(9700000001014, 'The Road', 'Cormac McCarthy', 1599, 230, 505);
+INSERT INTO Books VALUES(9700000001015, 'The Shining', 'Stephen King', 1899, 280, 504);
+INSERT INTO Books VALUES(9700000001016, 'Gone with the Wind', 'Margaret Mitchell', 2150, 270, 503);
+INSERT INTO Books VALUES(9700000001017, 'Anna Karenina', 'Leo Tolstoy', 1999, 240, 502);
+INSERT INTO Books VALUES(9700000001018, 'Frankenstein', 'Mary Shelley', 1450, 150, 501);
+INSERT INTO Books VALUES(9700000001019, 'Crime and Punishment', 'Fyodor Dostoevsky', 1699, 260, 509);
+INSERT INTO Books VALUES(9700000001020, 'The Picture of Dorian Gray', 'Oscar Wilde', 1750, 290, 509);
+INSERT INTO Books VALUES(9700000001021, 'Dracula', 'Bram Stoker', 1650, 310,505);
+INSERT INTO Books VALUES(9700000001022, 'The Grapes of Wrath', 'John Steinbeck', 1499, 160, 502);
+INSERT INTO Books VALUES(9700000001023, 'The Count of Monte Cristo', 'Alexandre Dumas', 2050, 330, 506);
+INSERT INTO Books VALUES(9700000001024, 'The Scarlet Letter', 'Nathaniel Hawthorne', 1399, 180, 509);
+INSERT INTO Books VALUES(9700000001025, 'The Brothers Karamazov', 'Fyodor Dostoevsky', 1950, 280, 507);
+
+
+INSERT INTO Customer VALUES(101, 'Soumojit Banerjee', 'Kolkata', 9700000001000, 501);
+INSERT INTO Customer VALUES(102, 'Aishwarya Sharma', 'Kolkata',9700000001001, 502);
+INSERT INTO Customer VALUES(103, 'Rahul Singh', 'Kolkata', 9700000001002, 503);
+INSERT INTO Customer VALUES(104, 'Ananya Patel', 'Kolkata',9700000001003, 504);
+INSERT INTO Customer VALUES(105, 'Prateek Kumar', 'Kolkata', 9700000001004, 505);
+INSERT INTO Customer VALUES(106, 'Neha Gupta', 'Kolkata', 9700000001005, 506);
+INSERT INTO Customer VALUES(107, 'Arjun Chatterjee', 'Kolkata', 9700000001006, 507);
+INSERT INTO Customer VALUES(108, 'Shreya Joshi', 'Kolkata', 9700000001007, 508);
+INSERT INTO Customer VALUES(109, 'Sandeep Kumar', 'Kolkata', 9700000001008, 509);
+INSERT INTO Customer VALUES(110, 'Pooja Sharma', 'Kolkata',9700000001010,510);
+INSERT INTO Customer VALUES(111, 'Vikas Singh', 'Kolkata', 9700000001011, 510);
+INSERT INTO Customer VALUES(112, 'Aarti Verma', 'Kolkata', 9700000001012, 509);
+INSERT INTO Customer VALUES(113, 'Rajat Gupta', 'Kolkata', 9700000001013, 508);
+INSERT INTO Customer VALUES(114, 'Jyoti Patel', 'Kolkata', 9700000001014, 507);
+INSERT INTO Customer VALUES(115, 'Karan Singh', 'Kolkata', 9700000001015, 506);
+INSERT INTO Customer VALUES(116, 'Nisha Verma', 'Kolkata', 9700000001016, 505);
+INSERT INTO Customer VALUES(117, 'Ravi Kapoor', 'Kolkata', 9700000001017, 504);
+INSERT INTO Customer VALUES(118, 'Divya Sharma', 'Kolkata', 9700000001018, 503);
+INSERT INTO Customer VALUES(119, 'Ankit Yadav', 'Kolkata', 9700000001019, 502);
+INSERT INTO Customer VALUES(120, 'Shivani Thakur', 'Kolkata',9700000001020, 501);
+INSERT INTO Customer VALUES(121, 'Vishal Reddy', 'Kolkata', 9700000001021, 502);
+INSERT INTO Customer VALUES(122, 'Preeti Nair', 'Kolkata', 9700000001022, 502);
+INSERT INTO Customer VALUES(123, 'Rohan Kapoor', 'Kolkata',9700000001023, 503);
+INSERT INTO Customer VALUES(124, 'Sneha Singh', 'Kolkata',9700000001024, 504);
+INSERT INTO Customer VALUES(125, 'Aryan Joshi', 'Kolkata', 9700000001025, 505);
+INSERT INTO Customer VALUES(176, 'Sneha Sharma', 'Kolkata',9700000001023, 506);
+INSERT INTO Customer VALUES(177, 'Vikas Yadav', 'Kolkata', 9700000001025, 507);
+INSERT INTO Customer VALUES(178, 'Ankita Verma', 'Kolkata',9700000001024, 508);
+INSERT INTO Customer VALUES(179, 'Rajesh Kumar', 'Kolkata', 9700000001023, 509);
+INSERT INTO Customer VALUES(180, 'Shalini Yadav', 'Kolkata', 9700000001022, 502);
+INSERT INTO Customer VALUES(181, 'Kunal Verma', 'Kolkata',9700000001021, 501);
+INSERT INTO Customer VALUES(182, 'Anita Singh', 'Kolkata',9700000001020, 502);
+INSERT INTO Customer VALUES(183, 'Rohit Kumar', 'Kolkata', 9700000001019, 503);
+INSERT INTO Customer VALUES(184, 'Swati Sharma', 'Kolkata', 9700000001018, 504);
+INSERT INTO Customer VALUES(185, 'Ravi Yadav', 'Kolkata',9700000001017, 505);
+INSERT INTO Customer VALUES(186, 'Kriti Verma', 'Kolkata',9700000001016, 506);
+INSERT INTO Customer VALUES(187, 'Sahil Kapoor', 'Kolkata',9700000001015, 507);
+INSERT INTO Customer VALUES(188, 'Pooja Singh', 'Kolkata', 9700000001014, 508);
+INSERT INTO Customer VALUES(189, 'Varun Sharma', 'Kolkata', 9700000001013, 509);
+INSERT INTO Customer VALUES(190, 'Neha Patel', 'Kolkata', 9700000001012, 508);
+INSERT INTO Customer VALUES(191, 'Rahul Verma', 'Kolkata', 9700000001011, 501);
+INSERT INTO Customer VALUES(192, 'Anjali Yadav', 'Kolkata', 9700000001010, 502);
+INSERT INTO Customer VALUES(193, 'Vikram Kapoor', 'Kolkata',9700000001009, 503);
+INSERT INTO Customer VALUES(194, 'Kavita Singh', 'Kolkata',9700000001008, 504);
+INSERT INTO Customer VALUES(195, 'Alok Verma', 'Kolkata',9700000001007, 505);
+INSERT INTO Customer VALUES(196, 'Priya Patel', 'Kolkata',9700000001006, 506);
+INSERT INTO Customer VALUES(197, 'Rajat Nair', 'Kolkata',9700000001005, 507);
+INSERT INTO Customer VALUES(198, 'Nandini Yadav', 'Kolkata',9700000001004, 508);
+INSERT INTO Customer VALUES(199, 'Sachin Verma', 'Kolkata',9700000001003, 509);
+INSERT INTO Customer VALUES(200, 'Anjali Nair', 'Kolkata',9700000001002, 507);
+INSERT INTO Customer VALUES(201, 'Vikas Yadav', 'Kolkata',9700000001001, 501);
+
+
+INSERT INTO IssueStatus VALUES(301, 9700000001000, '2023-05-15', 120);
+INSERT INTO IssueStatus VALUES(302, 9700000001001, '2023-05-16', 200);
+INSERT INTO IssueStatus VALUES(303, 9700000001002, '2023-08-14', 180);
+INSERT INTO IssueStatus VALUES(304, 9700000001003, '2023-05-18', 201);
+INSERT INTO IssueStatus VALUES(305, 9700000001004, '2023-03-13', 177);
+INSERT INTO IssueStatus VALUES(306, 9700000001005, '2023-05-20', 181);
+INSERT INTO IssueStatus VALUES(307, 9700000001006, '2023-07-01', 189);
+INSERT INTO IssueStatus VALUES(308, 9700000001007, '2023-07-02', 187);
+INSERT INTO IssueStatus VALUES(309, 9700000001008, '2023-07-03', 115);
+INSERT INTO IssueStatus VALUES(310, 9700000001009, '2023-07-04', 197);
+INSERT INTO IssueStatus VALUES(311, 9700000001010, '2023-07-05', 105);
+INSERT INTO IssueStatus VALUES(312, 9700000001011, '2023-07-06', 110);
+INSERT INTO IssueStatus VALUES(313, 9700000001012, '2023-07-07', 185);
+INSERT INTO IssueStatus VALUES(314, 9700000001013, '2023-07-08', 101);
+INSERT INTO IssueStatus VALUES(315, 9700000001014, '2023-07-09', 120);
+INSERT INTO IssueStatus VALUES(316, 9700000001015, '2023-07-10', 190);
+INSERT INTO IssueStatus VALUES(317,9700000001016, '2023-07-11', 110);
+INSERT INTO IssueStatus VALUES(318, 9700000001017, '2023-07-12', 195);
+INSERT INTO IssueStatus VALUES(319, 9700000001018, '2023-07-13', 105);
+INSERT INTO IssueStatus VALUES(320, 9700000001019, '2023-07-14', 110);
+INSERT INTO IssueStatus VALUES(321, 9700000001020, '2023-07-15', 180);
+
+
+INSERT INTO ReturnStatus VALUES(401, 9700000001000, '2023-11-23', 120);
+INSERT INTO ReturnStatus VALUES(402, 9700000001001, '2023-11-23', 200);
+INSERT INTO ReturnStatus VALUES(403, 9700000001002, '2023-11-23', 180);
+INSERT INTO ReturnStatus VALUES(404, 9700000001003, '2023-11-23', 201);
+INSERT INTO ReturnStatus VALUES(405, 9700000001004, '2023-11-23', 177);
+INSERT INTO ReturnStatus VALUES(406, 9700000001005, '2023-11-23', 181);
+INSERT INTO ReturnStatus VALUES(407, 9700000001006, '2023-11-23', 189);
+INSERT INTO ReturnStatus VALUES(408, 9700000001007, '2023-11-23', 187);
+INSERT INTO ReturnStatus VALUES(409, 9700000001008, '2023-11-23', 115);
+INSERT INTO ReturnStatus VALUES(410, 9700000001009, '2023-11-23', 197);
+INSERT INTO ReturnStatus VALUES(411, 9700000001010, '2023-11-23', 105);
+INSERT INTO ReturnStatus VALUES(412, 9700000001011, '2023-11-23', 110);
+INSERT INTO ReturnStatus VALUES(413, 9700000001012, '2023-11-23', 185);
+INSERT INTO ReturnStatus VALUES(414, 9700000001013, '2023-11-23', 101);
+INSERT INTO ReturnStatus VALUES(415, 9700000001014, '2023-11-23', 120);
+INSERT INTO ReturnStatus VALUES(416, 9700000001015, '2023-11-23', 190);
+
+
+INSERT INTO Fine(FineSts,CustomerId)
+SELECT
+    CASE 
+        WHEN DATEDIFF(ReturnStatus.ReturnDate, IssueStatus.IssueDate) > 180 THEN 'Fine'
+        ELSE 'No Fine'
+    END AS FineStatus,  ReturnStatus.CustomerId
+FROM IssueStatus INNER JOIN ReturnStatus ON IssueStatus.CustomerId=ReturnStatus.CustomerId and IssueStatus.ISBN= ReturnStatus.ISBN;
+
+SELECT * FROM Fine;
+
+SELECT count(*) FROM IssueStatus INNER JOIN BOOKS ON IssueStatus.ISBN = Books.ISBN
+WHERE IssueStatus.CustomerId =120;
+SELECT * FROM IssueStatus INNER JOIN BOOKS ON IssueStatus.ISBN = Books.ISBN
+WHERE IssueStatus.CustomerId =120;
+
+
+
